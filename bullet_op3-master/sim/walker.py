@@ -24,9 +24,9 @@ class Walker(OP3):
         self.x_vel = x_vel
         self.y_vel = y_vel
         self.ang_vel = ang_vel
-        self.sld_x_vel = p.addUserDebugParameter("x_vel", -10, 10, x_vel)
-        self.sld_y_vel = p.addUserDebugParameter("y_vel", -10, 10, y_vel)
-        self.sld_ang_vel = p.addUserDebugParameter("ang_vel", -10, 10, ang_vel)
+        # self.sld_x_vel = p.addUserDebugParameter("x_vel", -10, 10, x_vel)
+        # self.sld_y_vel = p.addUserDebugParameter("y_vel", -10, 10, y_vel)
+        # self.sld_ang_vel = p.addUserDebugParameter("ang_vel", -10, 10, ang_vel)
 
         self.wfunc = WFunc()
         # ~ self.ready_pos=get_walk_angles(10)

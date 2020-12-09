@@ -46,7 +46,7 @@ class test123(Benchmark):
 	"""
 	Name = ['Sphere']
 
-	def __init__(self, Lower=0.1, Upper=0.6):
+	def __init__(self, Lower=-0.6, Upper=0.6):
 		r"""Initialize of Sphere benchmark.
 
 		Args:
@@ -102,29 +102,30 @@ class test123(Benchmark):
 
 			val = 0.0
 			for i in range(D):
-				# val = sol[i]
-				parameters = {"swing_scale": 0.0,
-								   "step_scale": sol[1],
-								   "step_offset": sol[2],
-								   "ankle_offset": 0.0,
-								   "vx_scale": sol[3],
-								   "vy_scale": sol[4],
-								   "vt_scale": sol[5]}
-				walk_offset = {'hip_pitch': -0.063,
-							   'hip_roll': 0.0,
-							   'hip_yaw': 0.0,
-							   'ank_pitch': 0.0,
-							   'ank_roll': 0.0,
-							   'knee': 0.0}
+				val = sol[i]
 
-				for key, value in parameters.items():
-					print('{key}:{value}'.format(key=key, value=value))
-				for key, value in walk_offset.items():
-					print('{key}:{value}'.format(key=key, value=value))
-				x = run(1,0,0,parameters,walk_offset)
-				val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
+			parameters = {"swing_scale": 0.0,
+							   "step_scale": sol[1],
+							   "step_offset": sol[2],
+							   "ankle_offset": 0.0,
+							   "vx_scale": sol[3],
+							   "vy_scale": sol[4],
+							   "vt_scale": sol[5]}
+			walk_offset = {'hip_pitch': -0.063,
+						   'hip_roll': 0.0,
+						   'hip_yaw': 0.0,
+						   'ank_pitch': 0.0,
+						   'ank_roll': 0.0,
+						   'knee': 0.0}
+
+			for key, value in parameters.items():
+				print('{key}:{value}'.format(key=key, value=value))
+			for key, value in walk_offset.items():
+				print('{key}:{value}'.format(key=key, value=value))
+			x = run(1,0,0,parameters,walk_offset)
+			val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
 
 			# for i in range(D):val += sol[i] ** 2
-				print("----val------->",val)
+			print("----val------->",val)
 			return val
 		return evaluate
