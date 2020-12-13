@@ -15,8 +15,8 @@ from sphere import test123
 # we will run Genetic Algorithm for 5 independent runs
 data = []
 for i in range(20):
-    task = StoppingTask(D=6, nGEN=1, benchmark=test123())
-    algo = ParticleSwarmAlgorithm(NP=1, vMin=-5.0, vMax=5.0)
+    task = StoppingTask(D=6, nGEN=20, benchmark=test123())
+    algo = ParticleSwarmAlgorithm(NP=5, vMin=-5.0, vMax=5.0)
     for j in range(1):
         algo.run(task=task)
         print("第 >%s< 次" % i)

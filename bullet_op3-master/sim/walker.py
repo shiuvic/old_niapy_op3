@@ -3,7 +3,7 @@ import time
 from threading import Thread
 import numpy as np
 import pybullet as p
-
+import datetime
 from core.op3 import OP3
 from walking.wfunc import WFunc
 
@@ -17,7 +17,6 @@ class Walker(OP3):
         OP3.__init__(self, *args, **kwargs)
 
         self.running = False
-
         self.velocity = [0, 0, 0]
         self.walking = False
         self.fall = False
@@ -39,6 +38,9 @@ class Walker(OP3):
         self.sld_interval = p.addUserDebugParameter("step_interval", 0.001, 0.01, interval)
         self.save_button = p.addUserDebugParameter("save parameters", 1, -1, 1)
         # self.check_gui_th()
+        self.timemer = datetime.datetime.now()
+        self.time_c = Thread(target=self.time_th)
+        self.time_c.start()
 
     def update_new_vel(self, x_vel, y_vel, ang_vel, parm,offset):
         self.x_vel = x_vel
@@ -72,6 +74,7 @@ class Walker(OP3):
             self.init_walk()
             self._th_walk = Thread(target=self._do_walk)
             self._th_walk.start()
+            self.timemer = datetime.datetime.now()
             self.walking = True
 
     def stop(self):
@@ -162,6 +165,16 @@ class Walker(OP3):
         p.resetBasePositionAndOrientation(self.robot, self.op3StartPos, self.op3StartOrientation)
         self.start()
         self.set_velocity(self.x_vel, self.y_vel, self.ang_vel)
+
+
+    def time_th(self):
+        while True:
+            self.endtime = datetime.datetime.now()
+            timer = (self.endtime - self.timemer).seconds
+            if(timer == 5):
+                self.reset_and_start()
+            time.sleep(1)
+
 
 
 def interpolate(anglesa, anglesb, coefa):

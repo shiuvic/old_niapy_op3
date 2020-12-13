@@ -46,7 +46,7 @@ class test123(Benchmark):
 	"""
 	Name = ['Sphere']
 
-	def __init__(self, Lower=-0.6, Upper=0.6):
+	def __init__(self, Lower=-0.6, Upper=0.6, count = 0):
 		r"""Initialize of Sphere benchmark.
 
 		Args:
@@ -57,7 +57,7 @@ class test123(Benchmark):
 			:func:`NiaPy.benchmarks.Benchmark.__init__`
 		"""
 		Benchmark.__init__(self, Lower, Upper)
-
+		self.count  = count
 	@staticmethod
 	def latex_code():
 		r"""Return the latex code of the problem.
@@ -124,6 +124,8 @@ class test123(Benchmark):
 				print('{key}:{value}'.format(key=key, value=value))
 			x = run(1,0,0,parameters,walk_offset)
 			val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
+			self.count += 1
+			print("count=========================>",self.count)
 
 			# for i in range(D):val += sol[i] ** 2
 			print("----val------->",val)
