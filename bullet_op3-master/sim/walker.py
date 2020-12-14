@@ -38,9 +38,7 @@ class Walker(OP3):
         self.sld_interval = p.addUserDebugParameter("step_interval", 0.001, 0.01, interval)
         self.save_button = p.addUserDebugParameter("save parameters", 1, -1, 1)
         # self.check_gui_th()
-        self.timemer = datetime.datetime.now()
-        self.time_c = Thread(target=self.time_th)
-        self.time_c.start()
+        self.time__()
 
     def update_new_vel(self, x_vel, y_vel, ang_vel, parm,offset):
         self.x_vel = x_vel
@@ -166,15 +164,16 @@ class Walker(OP3):
         self.start()
         self.set_velocity(self.x_vel, self.y_vel, self.ang_vel)
 
-
-    def time_th(self):
-        while True:
-            self.endtime = datetime.datetime.now()
-            timer = (self.endtime - self.timemer).seconds
-            if(timer == 5):
-                self.reset_and_start()
-            time.sleep(1)
-
+    def time__(self):
+        self.timemer = datetime.datetime.now()
+        def time_th():
+            while True:
+                while(self.walking):
+                    timer = (datetime.datetime.now() - self.timemer).seconds
+                    if(timer == 5):
+                        self.reset_and_start()
+                    time.sleep(1)
+        Thread(target=time_th).start()
 
 
 def interpolate(anglesa, anglesb, coefa):

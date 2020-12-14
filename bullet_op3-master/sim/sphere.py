@@ -7,6 +7,7 @@ from NiaPy.benchmarks.benchmark import Benchmark
 from walking.wfunc import WFunc
 from walker import Walker
 import numpy as np
+from savetxt import savefit
 # __all__ = ['Sphere', 'Sphere2', 'Sphere3']
 from run import run
 class test123(Benchmark):
@@ -46,7 +47,7 @@ class test123(Benchmark):
 	"""
 	Name = ['Sphere']
 
-	def __init__(self, Lower=-0.6, Upper=0.6, count = 0):
+	def __init__(self, Lower=-0.6, Upper=0.6, count = 0 , data_count = 0):
 		r"""Initialize of Sphere benchmark.
 
 		Args:
@@ -57,7 +58,8 @@ class test123(Benchmark):
 			:func:`NiaPy.benchmarks.Benchmark.__init__`
 		"""
 		Benchmark.__init__(self, Lower, Upper)
-		self.count  = count
+		self.count = count
+		self.data_count = data_count
 	@staticmethod
 	def latex_code():
 		r"""Return the latex code of the problem.
@@ -126,7 +128,7 @@ class test123(Benchmark):
 			val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
 			self.count += 1
 			print("count=========================>",self.count)
-
+			savefit(self.data_count,val)
 			# for i in range(D):val += sol[i] ** 2
 			print("----val------->",val)
 			return val

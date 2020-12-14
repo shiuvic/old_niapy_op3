@@ -13,17 +13,19 @@ from NiaPy.task import StoppingTask
 from sphere import test123
 
 # we will run Genetic Algorithm for 5 independent runs
-data = []
 for i in range(20):
-    task = StoppingTask(D=6, nGEN=20, benchmark=test123())
+    f = open('F://新增資料夾 (2)//bullet_op3-master//sim//data//data(%d).txt'% i, 'w')
+    f.write('-0.000001')
+    f.close()
+    task = StoppingTask(D=6, nGEN=20, benchmark=test123(data_count = i))
     algo = ParticleSwarmAlgorithm(NP=5, vMin=-5.0, vMax=5.0)
     for j in range(1):
         algo.run(task=task)
         print("第 >%s< 次" % i)
         print("yes")
-    data.append(task.return_conv()[1])
-    print(data)
-    np.savetxt('data.txt',data)
+    # data.append(task.return_conv()[1])
+        print(task.return_conv())
+    # np.savetxt('data.txt',data)
     # task.plot()
 
     # for i in range(50):
