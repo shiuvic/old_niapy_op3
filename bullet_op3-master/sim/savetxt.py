@@ -1,7 +1,7 @@
 
 
 def savefit(data_i, data):
-    fname = 'F://新增資料夾 (2)//bullet_op3-master//sim//data//data(%s).txt'% data_i
+    fname = 'C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//data(%s).txt'% data_i
     with open(fname, 'r') as f:
         lines = f.readlines() #讀取所有行
         last_line = lines[-1]  # 取最後一行
