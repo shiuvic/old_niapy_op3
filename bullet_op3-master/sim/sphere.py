@@ -128,7 +128,7 @@ class test123(Benchmark):
 			val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
 			self.count += 1
 			print("count=========================>",self.count)
-			savefit(self.data_count,val)
+			savefit(self.data_count,val,parameters)
 			# for i in range(D):val += sol[i] ** 2
 			print("----val------->",val)
 			return val

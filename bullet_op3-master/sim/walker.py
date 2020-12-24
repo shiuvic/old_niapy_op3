@@ -39,7 +39,6 @@ class Walker(OP3):
         self.save_button = p.addUserDebugParameter("save parameters", 1, -1, 1)
         # self.check_gui_th()
         self.time__()
-
     def update_new_vel(self, x_vel, y_vel, ang_vel, parm,offset):
         self.x_vel = x_vel
         self.y_vel = y_vel
@@ -109,7 +108,6 @@ class Walker(OP3):
         """
         Main walking loop, smoothly update velocity vectors and apply corresponding angles
         """
-
         # Global walk loop
         n = 50
         phrase = True
