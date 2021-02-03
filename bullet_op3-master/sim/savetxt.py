@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore", category=Warning)
 
 
-Algorithm = 'fa'
+Algorithm = 'abc'
 
 def savefit(data_i, data,param):
     fname = 'C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//%s//data(%s).txt'% (Algorithm ,data_i)
@@ -25,9 +25,16 @@ def savefit(data_i, data,param):
             f.write('\n' + last_line)
             f.close()
     if(float(data) < float(best_val)):
-        with open(fbest, 'w') as f:
-            f.write(str(param))
+        with open(fbest, 'a') as f:
+            f.write('\n' + str(param))
             f.close()
         with open(fval, 'w') as file:
             file.write(str(data))
             file.close()
+
+def saveallpar(data,param):
+    fbest = 'C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//%s//all_data.txt' % Algorithm
+    if(float(data) < -1.0):
+        with open(fbest, 'a') as f:
+            f.write('\n' + str(data) +' >>> '+ str(param))
+            f.close()

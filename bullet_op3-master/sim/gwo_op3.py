@@ -10,14 +10,20 @@ from NiaPy.task import StoppingTask
 from sphere import test123
 
 # we will run Grey Wolf Optimizer for 5 independent runs
+f = open('C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//gwo//best_par.txt', 'w')
+f.write('first_line')
+f.close()
 f = open('C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//gwo//best_val.txt', 'w')
-f.write('1.0')
+f.write('100.0')
+f.close()
+f = open('C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//gwo//all_data.txt', 'w')
+f.write('first_line')
 f.close()
 for i in range(50):
     f = open('C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//gwo//data(%s).txt' % i, 'w')
-    f.write('-0.000001')
+    f.write('100')
     f.close()
-    task = StoppingTask(D=6, nGEN=20, benchmark=test123(data_count=i))
+    task = StoppingTask(D=6, nGEN=40, benchmark=test123(data_count=i))
     algo = GreyWolfOptimizer(NP=5)
     for j in range(20):
         algo.run(task=task)

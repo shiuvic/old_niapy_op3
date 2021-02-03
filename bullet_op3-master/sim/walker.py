@@ -6,7 +6,14 @@ import pybullet as p
 import datetime
 from core.op3 import OP3
 from walking.wfunc import WFunc
+import sys
 
+PYTHONUNBUFFERED = 1
+if sys.platform == "win32":
+    from ctypes import windll
+
+    timeBeginPeriod = windll.winmm.timeBeginPeriod
+    timeBeginPeriod(1)
 
 class Walker(OP3):
     """
@@ -23,6 +30,7 @@ class Walker(OP3):
         self.x_vel = x_vel
         self.y_vel = y_vel
         self.ang_vel = ang_vel
+        self.current_velocity = [0, 0, 0]
         # self.sld_x_vel = p.addUserDebugParameter("x_vel", -10, 10, x_vel)
         # self.sld_y_vel = p.addUserDebugParameter("y_vel", -10, 10, y_vel)
         # self.sld_ang_vel = p.addUserDebugParameter("ang_vel", -10, 10, ang_vel)
@@ -38,6 +46,7 @@ class Walker(OP3):
         self.sld_interval = p.addUserDebugParameter("step_interval", 0.001, 0.01, interval)
         self.save_button = p.addUserDebugParameter("save parameters", 1, -1, 1)
         # self.check_gui_th()
+        self.stop_count = 0
         self.time__()
     def update_new_vel(self, x_vel, y_vel, ang_vel, parm,offset):
         self.x_vel = x_vel
@@ -61,11 +70,12 @@ class Walker(OP3):
         If not there yet, go to initial walk position
         """
         if self.get_dist_to_ready() > 0.02:
+            time.sleep(2)
             self.set_angles_slow(self.ready_pos)
 
     def start(self):
         if not self.running:
-            print("Start Walking")
+            print("Start Walking", flush=True)
             self.fall = False
             self.running = True
             self.init_walk()
@@ -79,10 +89,12 @@ class Walker(OP3):
             self.fall = True
             self.walking = False
             print("Waiting for stopped")
+            time.sleep(1)
             while self._th_walk is not None:
                 time.sleep(0.1)
             print("Stopped")
             self.running = False
+            time.sleep(1)
 
     def set_velocity(self, x, y, t):
         self.velocity = [x, y, t]
@@ -113,6 +125,7 @@ class Walker(OP3):
         phrase = True
         i = 0
         self.current_velocity = [0, 0, 0]
+        self.stop_count = 0
         while self.walking or i < n or self.is_walking():
             if not self.walking:
                 self.velocity = [0, 0, 0]
@@ -129,6 +142,7 @@ class Walker(OP3):
                 i = 0
                 phrase = not phrase
             time.sleep(p.readUserDebugParameter(self.sld_interval) / self.sim_speed)
+            self.stop_count += 1
         self._th_walk = None
 
     def is_walking(self):
@@ -163,14 +177,13 @@ class Walker(OP3):
         self.set_velocity(self.x_vel, self.y_vel, self.ang_vel)
 
     def time__(self):
-        self.timemer = datetime.datetime.now()
         def time_th():
             while True:
-                while(self.walking):
-                    timer = (datetime.datetime.now() - self.timemer).seconds
-                    if(timer == 5):
-                        self.reset_and_start()
-                    time.sleep(1)
+                print(self.stop_count)
+                if(self.stop_count >= 1000):
+                    self.reset_and_start()
+                    # time.sleep(1)
+                time.sleep(0.5)
         Thread(target=time_th).start()
 
 

@@ -8,6 +8,7 @@ from walking.wfunc import WFunc
 from walker import Walker
 import numpy as np
 from savetxt import savefit
+from savetxt import saveallpar
 # __all__ = ['Sphere', 'Sphere2', 'Sphere3']
 from run import run
 class test123(Benchmark):
@@ -121,15 +122,16 @@ class test123(Benchmark):
 						   'knee': 0.0}
 
 			for key, value in parameters.items():
-				print('{key}:{value}'.format(key=key, value=value))
+				print('{key}:{value}'.format(key=key, value=value),flush=True)
 			for key, value in walk_offset.items():
-				print('{key}:{value}'.format(key=key, value=value))
+				print('{key}:{value}'.format(key=key, value=value),flush=True)
 			x = run(1,0,0,parameters,walk_offset)
 			val = (0 - np.linalg.norm(x - [0.0, 0.0, 0.0]))
 			self.count += 1
-			print("count=========================>",self.count)
+			print("count=========================>",self.count, flush=True)
 			savefit(self.data_count,val,parameters)
+			saveallpar(val, parameters)
 			# for i in range(D):val += sol[i] ** 2
-			print("----val------->",val)
+			print("----val------->",val ,  flush=True)
 			return val
 		return evaluate
