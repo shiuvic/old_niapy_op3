@@ -24,7 +24,7 @@ for i in range(50):
     f = open('C://Users//Po Wei//PycharmProjects//niapy_op3//bullet_op3-master//sim//data//abc//data(%s).txt'% i, 'w')
     f.write('100.0')
     f.close()
-    task = StoppingTask(D=6, nGEN=43, benchmark=test123(data_count = i),logger=True)
+    task = StoppingTask(D=6, nGEN=50, benchmark=test123(data_count = i),logger=True)
     algo = ArtificialBeeColonyAlgorithm(NP=5, Limit=2)
     algo.run(task=task)
     print("第 >%s< 次" % i)
